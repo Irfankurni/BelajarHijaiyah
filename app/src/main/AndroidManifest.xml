@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.belajarhijaiyah">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".kuis.KuisDotainActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".kuis.KuisKastainActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".kuis.KuisFatainActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".kuis.KuisDhomahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".kuis.KuisKasrohActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".kuis.KuisFathahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".kuis.KuisHijaiyahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".SkorKuis"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".KuisActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.HIjaiyahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.DhoTainActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.KasTainActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.FaTainActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.DhommahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.KasrohActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".belajar.FathahActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".BelajarActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="sensorLandscape" />
+    </application>
+
+</manifest>

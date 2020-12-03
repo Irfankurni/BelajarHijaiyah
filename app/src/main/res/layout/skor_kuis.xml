@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="97dp"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true">
+<Button
+    android:id="@+id/exit"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:text="X"
+    android:fontFamily="@font/fredoka"
+    android:background="@drawable/btn_exit"
+    android:layout_gravity="end"
+    />
+<TextView
+    android:text="@string/skor_anda"
+    android:fontFamily="@font/fredoka"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/resultLabel"
+    android:background="@color/colorPrimary"
+    android:textColor="#fff"
+    android:layout_gravity="center_horizontal"
+    android:padding="@dimen/activity_vertical_margin"
+    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+<TextView
+    android:text="@string/skor_tertinggi"
+    android:fontFamily="@font/fredoka"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_vertical_margin"
+    android:layout_gravity="center_horizontal"
+    android:textColor="@color/colorPrimary1"
+    android:background="@color/colorSplash"
+    android:id="@+id/totalScoreLabel"
+    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+<Button
+    android:text="@string/coba_lagi"
+    android:fontFamily="@font/fredoka"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/button"
+    android:background="@color/colorPrimary"
+    android:textColor="#fff"/>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Belajar Hijaiyah</string>
+    <string name="belajar">Belajar</string>
+    <string name="latihan">Latihan</string>
+    <string name="lagu">Lagu</string>
+    <string name="keluar">Keluar</string>
+    <string name="kembali">Kembali</string>
+    <string name="coba_lagi">coba lagi</string>
+    <string name="skor_tertinggi">Skor Tertinggi</string>
+    <string name="skor_anda">Skor Anda</string>
+    <string name="Q1">Q1</string>
+    <string name="pertanyaan">Pertanyaan</string>
+    <string name="a">ا</string>
+    <string name="b">ب</string>
+    <string name="c">ت</string>
+    <string name="d">ث</string>
+    <string name="song_name">Song Name</string>
+    <string name="singer">Singer</string>
+    <string name="LOADING">LOADING</string>
+</resources>
