@@ -63,7 +63,7 @@ public class KasTainActivity extends AppCompatActivity implements View.OnClickLi
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 finish();
             }
         });

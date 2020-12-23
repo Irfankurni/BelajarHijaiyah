@@ -62,7 +62,8 @@ public class KasrohActivity extends AppCompatActivity implements View.OnClickLis
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            finish();
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
+                finish();
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

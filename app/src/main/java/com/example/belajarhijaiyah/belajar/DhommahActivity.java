@@ -61,7 +61,8 @@ public class DhommahActivity extends AppCompatActivity implements View.OnClickLi
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            finish();
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
+                finish();
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

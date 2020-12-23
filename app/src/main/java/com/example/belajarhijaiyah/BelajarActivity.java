@@ -33,6 +33,7 @@ public class BelajarActivity extends AppCompatActivity {
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 finish();
             }
         });
@@ -41,7 +42,7 @@ public class BelajarActivity extends AppCompatActivity {
         hijaiyah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                hijaiyah.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent hijaiyah = new Intent(BelajarActivity.this, HIjaiyahActivity.class);
                 startActivity(hijaiyah);
             }
@@ -50,7 +51,7 @@ public class BelajarActivity extends AppCompatActivity {
         fathah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                fathah.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent fathah = new Intent(BelajarActivity.this, FathahActivity.class);
                 startActivity(fathah);
             }
@@ -59,7 +60,7 @@ public class BelajarActivity extends AppCompatActivity {
         kasroh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                kasroh.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent kasroh = new Intent(BelajarActivity.this, KasrohActivity.class);
                 startActivity(kasroh);
             }
@@ -68,7 +69,7 @@ public class BelajarActivity extends AppCompatActivity {
         dhommah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                dhommah.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent dhomah = new Intent(BelajarActivity.this, DhommahActivity.class);
                 startActivity(dhomah);
             }
@@ -77,7 +78,7 @@ public class BelajarActivity extends AppCompatActivity {
         tanwin1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tanwin1.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent tanwin1 = new Intent(BelajarActivity.this, FaTainActivity.class);
                 startActivity(tanwin1);
             }
@@ -86,7 +87,7 @@ public class BelajarActivity extends AppCompatActivity {
         tanwin2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tanwin2.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent tanwin2 = new Intent(BelajarActivity.this, KasTainActivity.class);
                 startActivity(tanwin2);
             }
@@ -95,7 +96,7 @@ public class BelajarActivity extends AppCompatActivity {
         tanwin3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                tanwin3.startAnimation(bounce);
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent tanwin3 = new Intent(BelajarActivity.this, DhoTainActivity.class);
                 startActivity(tanwin3);
             }
