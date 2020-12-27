@@ -33,12 +33,11 @@ import java.util.Collections;
 import java.util.Random;
 
 public class KuisHijaiyahActivity extends AppCompatActivity {
-    ImageButton close;
     private SoundPool soundPool;
     private int suaraFinish, Pertanyaan;
 
     private TextView countLabel;
-    private ImageButton questionLabel;
+    private ImageButton questionLabel, close;
     private MediaPlayer mp;
     private Button ansButton1;
     private Button ansButton2;
@@ -58,7 +57,7 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
             {"kuis_ha", "ح", "خ", "ص", "و"},
             {"kuis_kha", "خ", "ج", "د", "ا"},
             {"kuis_dal", "د", "ا", "ر", "ش"},
-            {"kuis_dza", "ذ", "ط", "ز", "ت"},
+            {"kuis_dzal", "ذ", "ط", "ز", "ت"},
             {"kuis_ro", "ر", "ت", "خ", "ض"},
             {"kuis_zha", "ز", "ذ", "ا", "ت"},
             {"kuis_sin", "س", "ش", "ص", "د"},

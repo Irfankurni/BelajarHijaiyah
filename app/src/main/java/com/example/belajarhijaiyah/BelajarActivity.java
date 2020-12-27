@@ -2,6 +2,8 @@ package com.example.belajarhijaiyah;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +30,6 @@ public class BelajarActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         bounce = AnimationUtils.loadAnimation(this,R.anim.bounce);
 
-
         kembali = findViewById(R.id.kembali);
         kembali.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,14 @@ public class BelajarActivity extends AppCompatActivity {
         });
 
         hijaiyah = findViewById(R.id.menu_hijaiyah);
+        fathah = findViewById(R.id.menu_fathah);
+        kasroh = findViewById(R.id.menu_kasroh);
+        dhommah = findViewById(R.id.menu_dhomah);
+        tanwin1 = findViewById(R.id.menu_tanwin1);
+        tanwin2 = findViewById(R.id.menu_tanwin2);
+        tanwin3 = findViewById(R.id.menu_tanwin3);
+
+
         hijaiyah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +56,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(hijaiyah);
             }
         });
-        fathah = findViewById(R.id.menu_fathah);
         fathah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +64,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(fathah);
             }
         });
-        kasroh = findViewById(R.id.menu_kasroh);
         kasroh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +72,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(kasroh);
             }
         });
-        dhommah = findViewById(R.id.menu_dhomah);
         dhommah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +80,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(dhomah);
             }
         });
-        tanwin1 = findViewById(R.id.menu_tanwin1);
         tanwin1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +88,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(tanwin1);
             }
         });
-        tanwin2 = findViewById(R.id.menu_tanwin2);
         tanwin2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +96,6 @@ public class BelajarActivity extends AppCompatActivity {
                 startActivity(tanwin2);
             }
         });
-        tanwin3 = findViewById(R.id.menu_tanwin3);
         tanwin3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

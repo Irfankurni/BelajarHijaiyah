@@ -21,7 +21,7 @@ import com.example.belajarhijaiyah.kuis.KuisKastainActivity;
 
 
 public class KuisActivity extends AppCompatActivity {
-    ImageButton hijaiyah, fathah, kasroh, domah, fatain, kastain, dotain, kembali;
+    private ImageButton hijaiyah, fathah, kasroh, domah, fatain, kastain, dotain, kembali;
     Animation bounce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

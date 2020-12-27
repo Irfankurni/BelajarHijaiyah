@@ -31,12 +31,11 @@ import java.util.Collections;
 import java.util.Random;
 
 public class KuisFathahActivity extends AppCompatActivity {
-    ImageButton close;
     private SoundPool soundPool;
     private int suaraFinish, Pertanyaan;
 
     private TextView countLabel;
-    private ImageButton questionLabel;
+    private ImageButton questionLabel, close;
     private MediaPlayer mp;
     private Button ansButton1;
     private Button ansButton2;

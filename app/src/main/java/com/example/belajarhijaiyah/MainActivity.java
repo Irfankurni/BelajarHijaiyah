@@ -17,7 +17,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton belajar, kuis;
+    private ImageButton belajar, kuis;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        Animation();
         kuis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(latihan);
             }
         });
-        Animation1();
+        Animation();
     }
     @Override
     public void onBackPressed() {
@@ -76,37 +75,44 @@ public class MainActivity extends AppCompatActivity {
         ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(belajar, "scaleY", 1f);
         scaleYBack.setDuration(500);
         scaleYBack.setInterpolator(new BounceInterpolator());
+        ObjectAnimator skalaY = ObjectAnimator.ofFloat(kuis, "scaleY", 0.8f);
+        skalaY.setDuration(200);
+        ObjectAnimator skalaYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
+        skalaYBack.setDuration(500);
+        skalaYBack.setInterpolator(new BounceInterpolator());
+
         final AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setStartDelay(600);
-        animatorSet.playSequentially(scaleY, scaleYBack);
+        animatorSet.playSequentially(scaleY, scaleYBack, skalaY, skalaYBack);
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                animatorSet.setStartDelay(1500);
+                animatorSet.setStartDelay(0);
                 animatorSet.start();
             }
         });
         belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        kuis.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         animatorSet.start();
     }
-    private void Animation1() {
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(kuis, "scaleY", 0.8f);
-        scaleY.setDuration(200);
-        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
-        scaleYBack.setDuration(500);
-        scaleYBack.setInterpolator(new BounceInterpolator());
-        final AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setStartDelay(600);
-        animatorSet.playSequentially(scaleY, scaleYBack);
-        animatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                animatorSet.setStartDelay(1500);
-                animatorSet.start();
-            }
-        });
-        belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        animatorSet.start();
-    }
+//    private void Animation1() {
+//        ObjectAnimator scaleY = ObjectAnimator.ofFloat(kuis, "scaleY", 0.8f);
+//        scaleY.setDuration(200);
+//        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
+//        scaleYBack.setDuration(500);
+//        scaleYBack.setInterpolator(new BounceInterpolator());
+//        final AnimatorSet animatorSet = new AnimatorSet();
+//        animatorSet.setStartDelay(600);
+//        animatorSet.playSequentially(scaleY, scaleYBack);
+//        animatorSet.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                animatorSet.setStartDelay(1500);
+//                animatorSet.start();
+//            }
+//        });
+//        belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+//        animatorSet.start();
+//    }
 
 }
