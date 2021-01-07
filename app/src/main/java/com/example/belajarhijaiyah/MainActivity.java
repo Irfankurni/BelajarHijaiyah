@@ -7,26 +7,36 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ServiceConnection {
     private ImageButton belajar, kuis;
+    MediaPlayer mp;
+    private MusicService mServ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        Intent service = new Intent(getApplicationContext(), MusicService.class);
+//        getApplicationContext().startService(service);
 
         belajar = findViewById(R.id.belajar);
         kuis = findViewById(R.id.kuis);
-
         belajar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
         Animation();
     }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -87,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                animatorSet.setStartDelay(0);
+                animatorSet.setStartDelay(1000);
                 animatorSet.start();
             }
         });
@@ -95,24 +106,31 @@ public class MainActivity extends AppCompatActivity {
         kuis.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         animatorSet.start();
     }
-//    private void Animation1() {
-//        ObjectAnimator scaleY = ObjectAnimator.ofFloat(kuis, "scaleY", 0.8f);
-//        scaleY.setDuration(200);
-//        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
-//        scaleYBack.setDuration(500);
-//        scaleYBack.setInterpolator(new BounceInterpolator());
-//        final AnimatorSet animatorSet = new AnimatorSet();
-//        animatorSet.setStartDelay(600);
-//        animatorSet.playSequentially(scaleY, scaleYBack);
-//        animatorSet.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                animatorSet.setStartDelay(1500);
-//                animatorSet.start();
-//            }
-//        });
-//        belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-//        animatorSet.start();
-//    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent= new Intent(this, MainActivity.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
+        Intent service = new Intent(getApplicationContext(), MusicService.class);
+        getApplicationContext().startService(service);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+        stopService(new Intent(this, MusicService.class));
+    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        MusicService.ServiceBinder b = (MusicService.ServiceBinder) service;
+        mServ = b.getService();
+
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mServ = null;
+    }
 }

@@ -21,7 +21,7 @@ import com.example.belajarhijaiyah.R;
 public class KasrohActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView TampilGambar;
     ImageButton show,hide, kembali;
-    private SoundPool soundPool;
+    SoundPool soundPool;
     private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
             Suaraza,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
             SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;

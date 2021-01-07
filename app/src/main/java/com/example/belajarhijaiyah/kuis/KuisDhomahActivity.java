@@ -31,17 +31,13 @@ import java.util.Collections;
 import java.util.Random;
 
 public class KuisDhomahActivity extends AppCompatActivity {
-    private SoundPool soundPool;
-    private int suaraFinish, Pertanyaan;
-
-    private TextView countLabel;
-    private ImageButton questionLabel, close;
-    private MediaPlayer mp;
-    private Button ansButton1;
-    private Button ansButton2;
-    private Button ansButton3;
-    private Button ansButton4;
+    SoundPool soundPool;
+    TextView countLabel;
+    ImageButton questionLabel, close;
+    MediaPlayer mp;
+    Button ansButton1, ansButton2, ansButton3, ansButton4;
     private String rightAnswer;
+    private int suaraFinish, Pertanyaan;
     private int rightAnswerCount = 0;
     private int quizCount = 1;
     private final int QUIZ_COUNT = 5;

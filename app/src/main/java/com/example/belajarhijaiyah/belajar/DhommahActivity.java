@@ -20,7 +20,7 @@ import com.example.belajarhijaiyah.R;
 
 public class DhommahActivity extends AppCompatActivity implements View.OnClickListener{
     ImageButton kembali, show, hide;
-    private SoundPool soundPool;
+    SoundPool soundPool;
     private int SuaraAlif, SuaraBa, SuaraTa, SuaraSa, SuaraJim, SuaraHa, SuaraKho, SuaraDal, SuaraDzal, SuaraRo,
             Suaraza, SuaraSin, SuaraSyin, SuaraShad, SuaraDod, SuaraTo, SuaraDo, SuaraAin, SuaraGin, Suarafa, SuaraKof,
             SuaraKaf, SuaraLam, SuaraMim, SuaraNun, SuaraWawu, SuaraHA, SuaraYa;

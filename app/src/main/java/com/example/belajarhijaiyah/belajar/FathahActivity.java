@@ -20,11 +20,11 @@ import android.widget.ImageView;
 import com.example.belajarhijaiyah.R;
 
 public class FathahActivity extends AppCompatActivity implements View.OnClickListener{
-ImageButton show, hide, kembali;
-ImageView TampilGambar;
-Animation anImScale;
-private SoundPool soundPool;
-private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
+    ImageButton show, hide, kembali;
+    ImageView TampilGambar;
+    Animation anImScale;
+    SoundPool soundPool;
+    private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
             Suaraza,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
             SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;
 

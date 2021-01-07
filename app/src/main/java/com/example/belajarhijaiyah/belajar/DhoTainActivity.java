@@ -22,7 +22,7 @@ public class DhoTainActivity extends AppCompatActivity implements View.OnClickLi
     ImageButton show, hide, kembali;
     ImageView TampilGambar;
     Animation anImScale;
-    private SoundPool soundPool;
+    SoundPool soundPool;
     private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
             SuaraJa,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
             SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;

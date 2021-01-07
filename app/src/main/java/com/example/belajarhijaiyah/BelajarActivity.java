@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -20,9 +24,10 @@ import com.example.belajarhijaiyah.belajar.HIjaiyahActivity;
 import com.example.belajarhijaiyah.belajar.KasTainActivity;
 import com.example.belajarhijaiyah.belajar.KasrohActivity;
 
-public class BelajarActivity extends AppCompatActivity {
+public class BelajarActivity extends AppCompatActivity implements ServiceConnection {
     ImageButton hijaiyah, fathah, kasroh, dhommah, tanwin1, tanwin2, tanwin3, kembali;
     Animation bounce;
+    MusicService mServ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,5 +110,29 @@ public class BelajarActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent= new Intent(this, MainActivity.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
+        Intent service = new Intent(getApplicationContext(), MusicService.class);
+        getApplicationContext().startService(service);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+        stopService(new Intent(this, MusicService.class));
+    }
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        MusicService.ServiceBinder b = (MusicService.ServiceBinder) service;
+        mServ = b.getService();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mServ = null;
     }
 }

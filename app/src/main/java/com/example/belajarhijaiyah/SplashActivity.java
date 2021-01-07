@@ -2,13 +2,17 @@ package com.example.belajarhijaiyah;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity{
     ProgressBar progressBar;
+    private MusicService mServ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,4 +42,5 @@ public class SplashActivity extends AppCompatActivity {
         };
         thread.start();
     }
+
 }

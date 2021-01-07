@@ -2,8 +2,12 @@ package com.example.belajarhijaiyah;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -20,14 +24,16 @@ import com.example.belajarhijaiyah.kuis.KuisKasrohActivity;
 import com.example.belajarhijaiyah.kuis.KuisKastainActivity;
 
 
-public class KuisActivity extends AppCompatActivity {
-    private ImageButton hijaiyah, fathah, kasroh, domah, fatain, kastain, dotain, kembali;
+public class KuisActivity extends AppCompatActivity implements ServiceConnection {
+    ImageButton hijaiyah, fathah, kasroh, domah, fatain, kastain, dotain, kembali;
     Animation bounce;
+    MusicService mServ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latihan);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        stopService(new Intent(this, MusicService.class));
 
         bounce = AnimationUtils.loadAnimation(this,R.anim.bounce);
         hijaiyah = findViewById(R.id.kuis_hijaiyah);
@@ -45,6 +51,8 @@ public class KuisActivity extends AppCompatActivity {
             public void onClick(View v) {
                 v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 finish();
+                Intent service = new Intent(getApplicationContext(), MusicService.class);
+//                getApplicationContext().startService(service);
             }
         });
 
@@ -118,5 +126,31 @@ public class KuisActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent intent= new Intent(this, MainActivity.class);
+        bindService(intent, this, Context.BIND_AUTO_CREATE);
+        Intent service = new Intent(getApplicationContext(), MusicService.class);
+        getApplicationContext().startService(service);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(this);
+        stopService(new Intent(this, MusicService.class));
+    }
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        MusicService.ServiceBinder b = (MusicService.ServiceBinder) service;
+        mServ = b.getService();
+
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mServ = null;
     }
 }
