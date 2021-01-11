@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -122,6 +123,7 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
             quizArray.add(tmpArray);
         }
         showNextQuiz();
+
     }
 
     public void showNextQuiz() {
@@ -140,8 +142,9 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         mp.start();
-//        questionLabel.setText(Quiz.get(0) + "? ");
         rightAnswer=Quiz.get(1);
+        Log.d("Acak", "Soal "+Quiz.get(0));
+
         Quiz.remove(0);
         Collections.shuffle(Quiz);
         ansButton1.setText(Quiz.get(0));
@@ -149,6 +152,8 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         ansButton3.setText(Quiz.get(2));
         ansButton4.setText(Quiz.get(3));
         quizArray.remove(randomNum);
+
+
 
         questionLabel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,10 +227,4 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         builder.show();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        soundPool.release();
-        soundPool = null;
-    }
 }

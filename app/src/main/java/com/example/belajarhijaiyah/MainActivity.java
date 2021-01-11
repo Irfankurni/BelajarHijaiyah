@@ -22,9 +22,9 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
-    private ImageButton belajar, kuis;
+    ImageButton belajar, kuis, exit;
     MediaPlayer mp;
-    private MusicService mServ;
+    MusicService mServ;
 
 
     @Override
@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        Intent service = new Intent(getApplicationContext(), MusicService.class);
-//        getApplicationContext().startService(service);
 
         belajar = findViewById(R.id.belajar);
         kuis = findViewById(R.id.kuis);
+        exit = findViewById(R.id.exit);
         belajar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 Intent latihan = new Intent(MainActivity.this, KuisActivity.class);
                 startActivity(latihan);
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
+                onBackPressed();
             }
         });
         Animation();
@@ -90,15 +96,19 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         skalaY.setDuration(200);
         ObjectAnimator skalaYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
         skalaYBack.setDuration(500);
+        ObjectAnimator sY = ObjectAnimator.ofFloat(exit, "scaleY", 0.8f);
+        skalaY.setDuration(200);
+        ObjectAnimator sYBack = ObjectAnimator.ofFloat(exit, "scaleY", 1f);
+        skalaYBack.setDuration(500);
         skalaYBack.setInterpolator(new BounceInterpolator());
 
         final AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setStartDelay(600);
-        animatorSet.playSequentially(scaleY, scaleYBack, skalaY, skalaYBack);
+        animatorSet.setStartDelay(800);
+        animatorSet.playSequentially(scaleY, scaleYBack, skalaY, skalaYBack, sY, sYBack);
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                animatorSet.setStartDelay(1000);
+                animatorSet.setStartDelay(1500);
                 animatorSet.start();
             }
         });

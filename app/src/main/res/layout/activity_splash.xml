@@ -30,7 +30,6 @@
         android:max="100"
         android:progress="10"
         android:progressDrawable="@drawable/custom_progress"
-        android:background="@color/colorSplash"
         android:visibility="visible" />
 
 </LinearLayout>
