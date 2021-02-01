@@ -112,7 +112,7 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
 
         //Membuat Kuis Array dari Quis Data
         for (int i=0;i<quizData.length;i++){
-            ArrayList<String> tmpArray=new ArrayList<>();
+            ArrayList<String> tmpArray = new ArrayList<>();
             tmpArray.add(quizData[i][0]);
             tmpArray.add(quizData[i][1]);
             tmpArray.add(quizData[i][2]);
@@ -130,8 +130,8 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         countLabel.setText(quizCount + "/5");
 
         //acak random nomor berbeda 0 dan quizArray length -1
-        Random random =new Random();
-        int randomNum=random.nextInt(quizArray.size());
+        Random random = new Random();
+        int randomNum = random.nextInt(quizArray.size());
         ArrayList<String> Quiz = quizArray.get(randomNum);
 
         int resID = getResources().getIdentifier(Quiz.get(0),"raw", getPackageName());
