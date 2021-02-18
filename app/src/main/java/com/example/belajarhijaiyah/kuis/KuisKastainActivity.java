@@ -14,6 +14,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,7 +35,7 @@ public class KuisKastainActivity extends AppCompatActivity {
     SoundPool soundPool;
     TextView countLabel;
     ImageButton questionLabel, close;
-    MediaPlayer mp;
+    MediaPlayer audio;
     Button ansButton1, ansButton2, ansButton3, ansButton4;
     private int suaraFinish, Pertanyaan;
     private String rightAnswer;
@@ -98,7 +99,6 @@ public class KuisKastainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mp = new MediaPlayer();
         countLabel = findViewById(R.id.countLabel);
         questionLabel = findViewById(R.id.suara);
         ansButton1 = findViewById(R.id.ansButton1);
@@ -137,6 +137,7 @@ public class KuisKastainActivity extends AppCompatActivity {
         }
         mp.start();
 //        questionLabel.setText(Quiz.get(0) + "? ");
+        Log.i("Acak", "Soal"+Quiz);
         rightAnswer=Quiz.get(1);
         Quiz.remove(0);
         Collections.shuffle(Quiz);
@@ -171,7 +172,6 @@ public class KuisKastainActivity extends AppCompatActivity {
         }
         else {
             quizCount++;
-            mp.release();
             showNextQuiz();
         }
     }
@@ -219,9 +219,27 @@ public class KuisKastainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onResume() {
+        super.onResume();
+        audio = MediaPlayer.create(this, R.raw.backsound);
+        audio.setVolume(0.05f, 0.05f);
+        audio.setLooping(true);
+        audio.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        audio.stop();
+        audio.release();
+    }
+    @Override
+    protected void onDestroy(){
         super.onDestroy();
         soundPool.release();
         soundPool = null;
+//        audio.stop();
+        audio.release();
+        audio = null;
     }
 }

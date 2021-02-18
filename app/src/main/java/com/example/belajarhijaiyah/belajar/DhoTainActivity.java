@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class DhoTainActivity extends AppCompatActivity implements View.OnClickLi
     ImageView TampilGambar;
     Animation anImScale;
     SoundPool soundPool;
+    MediaPlayer mp;
     private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
             SuaraJa,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
             SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;
@@ -308,10 +310,28 @@ public class DhoTainActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
     @Override
+    protected void onResume() {
+        super.onResume();
+        mp = MediaPlayer.create(this, R.raw.backsound);
+        mp.setVolume(0.06f, 0.06f);
+        mp.setLooping(true);
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.stop();
+        mp.release();
+    }
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         soundPool.release();
         soundPool = null;
+//        mp.stop();
+        mp.release();
+        mp = null;
     }
 
 }

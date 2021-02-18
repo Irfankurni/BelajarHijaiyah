@@ -37,7 +37,7 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
     SoundPool soundPool;
     TextView countLabel;
     ImageButton questionLabel, close;
-    MediaPlayer mp;
+    MediaPlayer audio;
     Button ansButton1, ansButton2, ansButton3, ansButton4;
     private int suaraFinish, Pertanyaan;
     private String rightAnswer;
@@ -46,34 +46,34 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
     private final int QUIZ_COUNT = 5;
     ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
     String[][] quizData = {
-            {"kuis_alif",  "ا", "ج", "د", "ح"},
-            {"kuis_ba", "ب","ذ", "ش", "ت"},
-            {"kuis_ta", "ت", "خ", "ظ", "ب"},
-            {"kuis_tsa", "ث", "ب", "ر", "ك"},
-            {"kuis_ja", "ج", "س", "ظ", "ع"},
-            {"kuis_ha", "ح", "خ", "ص", "و"},
-            {"kuis_kha", "خ", "ج", "د", "ا"},
-            {"kuis_dal", "د", "ا", "ر", "ش"},
-            {"kuis_dzal", "ذ", "ط", "ز", "ت"},
-            {"kuis_ro", "ر", "ت", "خ", "ض"},
-            {"kuis_zha", "ز", "ذ", "ا", "ت"},
-            {"kuis_sin", "س", "ش", "ص", "د"},
-            {"kuis_syin", "ش", "س", "غ", "ي"},
-            {"kuis_sho", "ص", "ي", "ق", "خ"},
-            {"kuis_dod", "ض", "ف", "ز", "ق"},
-            {"kuis_tho", "ط", "ل", "ك", "خ"},
-            {"kuis_dzho", "ظ", "م", "ن", "ف"},
-            {"kuis_ain", "ع", "ب", "غ", "د"},
-            {"kuis_gho", "غ", "ض", "ع", "ي"},
-            {"kuis_fa", "ف", "ق", "ض", "ن"},
-            {"kuis_qo", "ق", "ط", "ل", "م"},
-            {"kuis_ka", "ك", "ح", "ق", "ن"},
-            {"kuis_lam", "ل", "ك", "ن", "س"},
-            {"kuis_mim", "م", "ف", "ق", "ظ"},
-            {"kuis_nun", "ن", "ب", "م", "ه"},
-            {"kuis_waw", "و", "ه", "ك", "ف"},
-            {"kuis_haa", "ه", "ض", "ح", "خ"},
-            {"kuis_ya", "ي", "م", "ق", "ن"}
+            {"kuis_alif",  "ا", "ج", "د", "ح"}, //1
+            {"kuis_ba", "ب","ذ", "ش", "ت"},     //2
+            {"kuis_ta", "ت", "خ", "ظ", "ب"},    //3
+            {"kuis_tsa", "ث", "ب", "ر", "ك"},   //4
+            {"kuis_ja", "ج", "س", "ظ", "ع"},    //5
+            {"kuis_ha", "ح", "خ", "ص", "و"},    //6
+            {"kuis_kha", "خ", "ج", "د", "ا"},   //7
+            {"kuis_dal", "د", "ا", "ر", "ش"},   //8
+            {"kuis_dzal", "ذ", "ط", "ز", "ت"},  //9
+            {"kuis_ro", "ر", "ت", "خ", "ض"},    //10
+            {"kuis_zha", "ز", "ذ", "ا", "ت"},   //11
+            {"kuis_sin", "س", "ش", "ص", "د"},   //12
+            {"kuis_syin", "ش", "س", "غ", "ي"},  //13
+            {"kuis_sho", "ص", "ي", "ق", "خ"},   //14
+            {"kuis_dod", "ض", "ف", "ز", "ق"},   //15
+            {"kuis_tho", "ط", "ل", "ك", "خ"},   //16
+            {"kuis_dzho", "ظ", "م", "ن", "ف"},  //17
+            {"kuis_ain", "ع", "ب", "غ", "د"},   //18
+            {"kuis_gho", "غ", "ض", "ع", "ي"},   //19
+            {"kuis_fa", "ف", "ق", "ض", "ن"},    //20
+            {"kuis_qo", "ق", "ط", "ل", "م"},    //21
+            {"kuis_ka", "ك", "ح", "ق", "ن"},    //22
+            {"kuis_lam", "ل", "ك", "ن", "س"},   //23
+            {"kuis_mim", "م", "ف", "ق", "ظ"},   //24
+            {"kuis_nun", "ن", "ب", "م", "ه"},   //25
+            {"kuis_waw", "و", "ه", "ك", "ف"},   //26
+            {"kuis_haa", "ه", "ض", "ح", "خ"},   //27
+            {"kuis_ya", "ي", "م", "ق", "ن"}     //28
     };
 
     @Override
@@ -102,7 +102,6 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
                 finish();
             }
         });
-        mp = new MediaPlayer();
         countLabel = findViewById(R.id.countLabel);
         questionLabel = findViewById(R.id.suara);
         ansButton1 = findViewById(R.id.ansButton1);
@@ -123,7 +122,6 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
             quizArray.add(tmpArray);
         }
         showNextQuiz();
-
     }
 
     public void showNextQuiz() {
@@ -133,7 +131,6 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         Random random =new Random();
         int randomNum=random.nextInt(quizArray.size());
         ArrayList<String> Quiz = quizArray.get(randomNum);
-
         int resID = getResources().getIdentifier(Quiz.get(0),"raw", getPackageName());
         final MediaPlayer mp = MediaPlayer.create(getApplicationContext(), resID);
         try{
@@ -142,8 +139,8 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         mp.start();
+        Log.i("Acak", "Soal"+Quiz);
         rightAnswer=Quiz.get(1);
-        Log.d("Acak", "Soal "+Quiz.get(0));
 
         Quiz.remove(0);
         Collections.shuffle(Quiz);
@@ -153,14 +150,13 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         ansButton4.setText(Quiz.get(3));
         quizArray.remove(randomNum);
 
-
-
         questionLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mp.start();
             }
         });
+
     }
     public void checkAnswer(View view){
         Button ansButton = findViewById(view.getId());
@@ -180,7 +176,6 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         }
         else {
             quizCount++;
-            mp.release();
             showNextQuiz();
         }
     }
@@ -226,5 +221,28 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
 
         builder.show();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        audio = MediaPlayer.create(this, R.raw.backsound);
+        audio.setVolume(0.05f, 0.05f);
+        audio.setLooping(true);
+        audio.start();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        audio.stop();
+        audio.release();
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
+//        audio.stop();
+        audio.release();
+        audio = null;
+    }
 }

@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.example.belajarhijaiyah.belajar.KasrohActivity;
 public class BelajarActivity extends AppCompatActivity implements ServiceConnection {
     ImageButton hijaiyah, fathah, kasroh, dhommah, tanwin1, tanwin2, tanwin3, kembali;
     Animation bounce;
+    MediaPlayer mp;
     MusicService mServ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

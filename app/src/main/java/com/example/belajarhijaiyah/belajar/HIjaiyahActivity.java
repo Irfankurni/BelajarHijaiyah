@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class HIjaiyahActivity extends AppCompatActivity implements View.OnClickL
             SuaraZa,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
             SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;
     Animation anImScale;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,10 +307,29 @@ public class HIjaiyahActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mp = MediaPlayer.create(this, R.raw.backsound);
+        mp.setVolume(0.06f, 0.06f);
+        mp.setLooping(true);
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.stop();
+        mp.release();
+    }
     protected void onDestroy() {
         super.onDestroy();
         soundPool.release();
         soundPool = null;
+//        mp.stop();
+        mp.release();
+        mp = null;
     }
 
 }
