@@ -11,7 +11,6 @@ public class MusicService extends Service  implements MediaPlayer.OnErrorListene
 
     private final IBinder mBinder = new ServiceBinder();
     MediaPlayer mPlayer;
-//    private int length = 0;
 
     public MusicService() { }
 

@@ -141,7 +141,6 @@ public class KuisHijaiyahActivity extends AppCompatActivity {
         mp.start();
         Log.i("Acak", "Soal"+Quiz);
         rightAnswer=Quiz.get(1);
-
         Quiz.remove(0);
         Collections.shuffle(Quiz);
         ansButton1.setText(Quiz.get(0));

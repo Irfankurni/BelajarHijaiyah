@@ -57,6 +57,4 @@ public class SkorKuis extends AppCompatActivity {
         editor.commit();
     }
 
-
-
 }

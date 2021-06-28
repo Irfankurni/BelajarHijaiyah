@@ -327,7 +327,6 @@ public class HIjaiyahActivity extends AppCompatActivity implements View.OnClickL
         super.onDestroy();
         soundPool.release();
         soundPool = null;
-//        mp.stop();
         mp.release();
         mp = null;
     }

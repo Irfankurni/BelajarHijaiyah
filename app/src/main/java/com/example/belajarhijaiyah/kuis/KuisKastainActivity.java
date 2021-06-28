@@ -136,7 +136,6 @@ public class KuisKastainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         mp.start();
-//        questionLabel.setText(Quiz.get(0) + "? ");
         Log.i("Acak", "Soal"+Quiz);
         rightAnswer=Quiz.get(1);
         Quiz.remove(0);

@@ -33,7 +33,6 @@ public class KuisActivity extends AppCompatActivity implements ServiceConnection
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latihan);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        stopService(new Intent(this, MusicService.class));
 
         bounce = AnimationUtils.loadAnimation(this,R.anim.bounce);
         hijaiyah = findViewById(R.id.kuis_hijaiyah);
@@ -52,7 +51,6 @@ public class KuisActivity extends AppCompatActivity implements ServiceConnection
                 v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
                 finish();
                 Intent service = new Intent(getApplicationContext(), MusicService.class);
-//                getApplicationContext().startService(service);
             }
         });
 

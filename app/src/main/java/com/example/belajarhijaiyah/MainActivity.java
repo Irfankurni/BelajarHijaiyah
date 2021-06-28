@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     public void onServiceConnected(ComponentName name, IBinder service) {
         MusicService.ServiceBinder b = (MusicService.ServiceBinder) service;
         mServ = b.getService();
-
     }
 
     @Override

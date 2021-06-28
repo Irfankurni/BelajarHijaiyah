@@ -329,7 +329,6 @@ public class DhommahActivity extends AppCompatActivity implements View.OnClickLi
         super.onDestroy();
         soundPool.release();
         soundPool = null;
-//        mp.stop();
         mp.release();
         mp = null;
     }

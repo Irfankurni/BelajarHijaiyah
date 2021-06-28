@@ -324,7 +324,6 @@ public class FathahActivity extends AppCompatActivity implements View.OnClickLis
         super.onDestroy();
         soundPool.release();
         soundPool = null;
-//        mp.stop();
         mp.release();
         mp = null;
     }

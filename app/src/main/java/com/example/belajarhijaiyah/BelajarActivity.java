@@ -54,7 +54,6 @@ public class BelajarActivity extends AppCompatActivity implements ServiceConnect
         tanwin2 = findViewById(R.id.menu_tanwin2);
         tanwin3 = findViewById(R.id.menu_tanwin3);
 
-
         hijaiyah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
