@@ -7,11 +7,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -20,11 +23,13 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
-    ImageButton belajar, kuis, exit;
+    ImageButton belajar, kuis, info, exit;
     MediaPlayer mp;
     MusicService mServ;
+    Dialog dialog;
 
 
     @Override
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         belajar = findViewById(R.id.belajar);
         kuis = findViewById(R.id.kuis);
         exit = findViewById(R.id.exit);
+        dialog = new Dialog(this);
+        info = findViewById(R.id.info);
         belajar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 startActivity(latihan);
             }
         });
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInfo();
+            }
+        });
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +74,19 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         });
         Animation();
+    }
+
+    private void openInfo(){
+        dialog.setContentView(R.layout.about);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView ivclose = dialog.findViewById(R.id.exit1);
+        ivclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
