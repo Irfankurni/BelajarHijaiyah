@@ -26,9 +26,12 @@ import android.widget.Toast;
 
 import com.example.belajarhijaiyah.KuisActivity;
 import com.example.belajarhijaiyah.R;
+import com.example.belajarhijaiyah.constant.Constants;
+import com.example.belajarhijaiyah.constant.Soal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 
 public class KuisKasrohActivity extends AppCompatActivity {
@@ -37,67 +40,30 @@ public class KuisKasrohActivity extends AppCompatActivity {
     ImageButton questionLabel, close;
     MediaPlayer audio;
     Button ansButton1, ansButton2, ansButton3, ansButton4;
-    private int suaraFinish, Pertanyaan;
+    private int suaraFinish;
     private String rightAnswer;
     private int rightAnswerCount = 0;
     private int quizCount = 1;
-    private final int QUIZ_COUNT = 5;
     ArrayList<ArrayList<String>> quizArray = new ArrayList<>();
-    String[][] quizData = {
-            {"kuiskasroh_i",  "اِ", "لِ", "د", "ضَ"},
-            {"kuiskasroh_bi", "بِ","نِ", "يِ", "ت"},
-            {"kuiskasroh_ti", "تِ", "نَ", "ثِ", "ب"},
-            {"kuiskasroh_tsi", "ثِ", "ب", "نَ", "ك"},
-            {"kuiskasroh_ji", "جِ", "ظَ", "ظ", "خَ"},
-            {"kuiskasroh_hi", "حِ", "خ", "جِ", "و"},
-            {"kuiskasroh_khi", "خِ", "ج", "فَ", "ا"},
-            {"kuiskasroh_di", "دِ", "دَ", "سَ", "ش"},
-            {"kuiskasroh_dzi", "ذِ", "دَ", "ز", "ذ"},
-            {"kuiskasroh_ri", "رِ", "زَ", "ر", "ض"},
-            {"kuiskasroh_zi", "زِ", "ذ", "رِ", "ت"},
-            {"kuiskasroh_si", "سِ", "ش", "شَ", "د"},
-            {"kuiskasroh_syi", "شِ", "س", "شَ", "ي"},
-            {"kuiskasroh_shi", "صِ", "ي", "ضَ", "خ"},
-            {"kuiskasroh_di", "ضِ", "ف", "ضَ", "ق"},
-            {"kuiskasroh_thi", "طِ", "ل", "ط", "خ"},
-            {"kuiskasroh_dzhi", "ظِ", "م", "ط", "ف"},
-            {"kuiskasroh_ii", "عِ", "ب", "غ", "عَ"},
-            {"kuiskasroh_ghi", "غِ", "ض", "ع", "عَ"},
-            {"kuiskasroh_fi", "فِ", "ق", "فَ", "ن"},
-            {"kuiskasroh_qi", "قِ", "فَ", "ل", "م"},
-            {"kuiskasroh_ki", "كِ", "ح", "كَ", "ن"},
-            {"kuiskasroh_li", "لِ", "ك", "لَ", "س"},
-            {"kuiskasroh_mi", "مِ", "ف", "ق", "مَ"},
-            {"kuiskasroh_ni", "نِ", "ب", "يَ", "مَ"},
-            {"kuiskasroh_wi", "وِ", "ه", "يَ", "ف"},
-            {"kuiskasroh_hii", "هِ", "مِ", "يَ", "خ"},
-            {"kuiskasroh_yi", "يِ", "م", "يَ", "مِ"}
-    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kuis_kasroh);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
-            soundPool = new SoundPool.Builder()
-                    .setMaxStreams(3)
-                    .setAudioAttributes(audioAttributes).build();
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(3)
+                .setAudioAttributes(audioAttributes).build();
 
-        } else {
-            soundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
-        }
         suaraFinish = soundPool.load(this, R.raw.sound_selesai, 1);
 
         close = findViewById(R.id.exit8);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
-                startActivity(new Intent(KuisKasrohActivity.this, KuisActivity.class));
-                finish();
-            }
+        close.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
+            startActivity(new Intent(KuisKasrohActivity.this, KuisActivity.class));
+            finish();
         });
         countLabel = findViewById(R.id.countLabel);
         questionLabel = findViewById(R.id.suara);
@@ -107,13 +73,13 @@ public class KuisKasrohActivity extends AppCompatActivity {
         ansButton4 = findViewById(R.id.ansButton4);
 
         //Membuat Kuis Array dari Quis Data
-        for (int i=0;i<quizData.length;i++){
+        for (int i = 0; i< Soal.kasroh.length; i++){
             ArrayList<String> tmpArray=new ArrayList<>();
-            tmpArray.add(quizData[i][0]);
-            tmpArray.add(quizData[i][1]);
-            tmpArray.add(quizData[i][2]);
-            tmpArray.add(quizData[i][3]);
-            tmpArray.add(quizData[i][4]);
+            tmpArray.add(Soal.kasroh[i][0]);
+            tmpArray.add(Soal.kasroh[i][1]);
+            tmpArray.add(Soal.kasroh[i][2]);
+            tmpArray.add(Soal.kasroh[i][3]);
+            tmpArray.add(Soal.kasroh[i][4]);
 
             // Membuat tmpArray ke QuizArray
             quizArray.add(tmpArray);
@@ -146,26 +112,26 @@ public class KuisKasrohActivity extends AppCompatActivity {
         ansButton4.setText(Quiz.get(3));
         quizArray.remove(randomNum);
 
-        questionLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp.start();
-            }
-        });
+        questionLabel.setOnClickListener(view -> mp.start());
+        ansButton1.setOnClickListener(this::checkAnswer);
+        ansButton2.setOnClickListener(this::checkAnswer);
+        ansButton3.setOnClickListener(this::checkAnswer);
+        ansButton4.setOnClickListener(this::checkAnswer);
     }
     public void checkAnswer(View view){
         Button ansButton = findViewById(view.getId());
         String btntxt = ansButton.getText().toString();
         if(btntxt.equals(rightAnswer)){
-            Toast.makeText(KuisKasrohActivity.this, "Benar!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KuisKasrohActivity.this, Constants.ANS_RIGHT, Toast.LENGTH_SHORT).show();
             rightAnswerCount++;
         }
         else{
-            Toast.makeText(KuisKasrohActivity.this, "Salah!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KuisKasrohActivity.this, Constants.ANS_WRONG, Toast.LENGTH_SHORT).show();
         }
+        int QUIZ_COUNT = 5;
         if (quizCount == QUIZ_COUNT){
             //berpindah ke hasil/skor
-            Toast.makeText(KuisKasrohActivity.this, "Selesai!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KuisKasrohActivity.this, Constants.FINISH, Toast.LENGTH_SHORT).show();
             soundPool.play(suaraFinish, 1, 1, 0, 0, 1);
             showResult();
         }
@@ -178,7 +144,7 @@ public class KuisKasrohActivity extends AppCompatActivity {
         AlertDialog builder = new AlertDialog.Builder(this).create();
         LayoutInflater inflater = getLayoutInflater();
         builder.setCancelable(false);
-        builder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(builder.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         View dialogLayout = inflater.inflate(R.layout.skor_kuis, null);
         final TextView resultLabel = dialogLayout.findViewById(R.id.resultLabel);
         final TextView totalScoreLabel = dialogLayout.findViewById(R.id.totalScoreLabel);
@@ -195,23 +161,15 @@ public class KuisKasrohActivity extends AppCompatActivity {
         //update the totalScore
         SharedPreferences.Editor editor =settings.edit();
         editor.putInt("totalScore",totalScore);
-        editor.commit();
+        editor.apply();
         builder.setView(dialogLayout);
 
 
-        cobaLagi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recreate();
-            }
-        });
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent exit = new Intent(KuisKasrohActivity.this, KuisActivity.class);
-                startActivity(exit);
-                finish();
-            }
+        cobaLagi.setOnClickListener(v -> recreate());
+        close.setOnClickListener(v -> {
+            Intent exit = new Intent(KuisKasrohActivity.this, KuisActivity.class);
+            startActivity(exit);
+            finish();
         });
 
         builder.show();
@@ -236,7 +194,6 @@ public class KuisKasrohActivity extends AppCompatActivity {
         super.onDestroy();
         soundPool.release();
         soundPool = null;
-//        audio.stop();
         audio.release();
         audio = null;
     }

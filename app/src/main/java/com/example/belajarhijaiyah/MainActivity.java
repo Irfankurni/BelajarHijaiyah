@@ -1,7 +1,5 @@
 package com.example.belajarhijaiyah;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -13,9 +11,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
@@ -25,12 +23,13 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity implements ServiceConnection {
-    ImageButton belajar, kuis, info, exit;
-    MediaPlayer mp;
-    MusicService mServ;
-    Dialog dialog;
+import androidx.appcompat.app.AppCompatActivity;
 
+public class MainActivity extends AppCompatActivity implements ServiceConnection {
+
+    private ImageButton belajar, kuis, info, exit;
+    private MusicService mServ;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,99 +37,72 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        initializeViews();
+        setupClickListeners();
+        startAnimations();
+    }
+
+    private void initializeViews() {
         belajar = findViewById(R.id.belajar);
         kuis = findViewById(R.id.kuis);
         exit = findViewById(R.id.exit);
-        dialog = new Dialog(this);
         info = findViewById(R.id.info);
-        belajar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
-                Intent belajar = new Intent(MainActivity.this, BelajarActivity.class);
-                startActivity(belajar);
-            }
-
-        });
-        kuis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
-                Intent latihan = new Intent(MainActivity.this, KuisActivity.class);
-                startActivity(latihan);
-            }
-        });
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openInfo();
-            }
-        });
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
-                onBackPressed();
-            }
-        });
-        Animation();
+        dialog = new Dialog(this);
     }
 
-    private void openInfo(){
+    private void setupClickListeners() {
+        belajar.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
+            startActivity(new Intent(MainActivity.this, BelajarActivity.class));
+        });
+
+        kuis.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
+            startActivity(new Intent(MainActivity.this, KuisActivity.class));
+        });
+
+        info.setOnClickListener(v -> openInfo());
+
+        exit.setOnClickListener(v -> {
+            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
+            onBackPressed();
+        });
+    }
+
+    private void openInfo() {
         dialog.setContentView(R.layout.about);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ImageView ivclose = dialog.findViewById(R.id.exit1);
-        ivclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        ivclose.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
     }
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setMessage("Do you want to Exit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user pressed "yes", then he is allowed to exit from application
-                System.exit(0);
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setMessage("Do you want to Exit?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    System.exit(0);
+                    finish();
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .create()
+                .show();
     }
-    private void Animation() {
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(belajar, "scaleY", 0.8f);
-        scaleY.setDuration(200);
-        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(belajar, "scaleY", 1f);
-        scaleYBack.setDuration(500);
-        scaleYBack.setInterpolator(new BounceInterpolator());
-        ObjectAnimator skalaY = ObjectAnimator.ofFloat(kuis, "scaleY", 0.8f);
-        skalaY.setDuration(200);
-        ObjectAnimator skalaYBack = ObjectAnimator.ofFloat(kuis, "scaleY", 1f);
-        skalaYBack.setDuration(500);
-        ObjectAnimator sY = ObjectAnimator.ofFloat(exit, "scaleY", 0.8f);
-        skalaY.setDuration(200);
-        ObjectAnimator sYBack = ObjectAnimator.ofFloat(exit, "scaleY", 1f);
-        skalaYBack.setDuration(500);
-        skalaYBack.setInterpolator(new BounceInterpolator());
 
-        final AnimatorSet animatorSet = new AnimatorSet();
+    private void startAnimations() {
+        AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setStartDelay(800);
-        animatorSet.playSequentially(scaleY, scaleYBack, skalaY, skalaYBack, sY, sYBack);
+        animatorSet.playSequentially(
+                createScaleAnimator(belajar, "scaleY", 0.8f, 200),
+                createScaleAnimator(belajar, "scaleY", 1f, 500, new BounceInterpolator()),
+                createScaleAnimator(kuis, "scaleY", 0.8f, 200),
+                createScaleAnimator(kuis, "scaleY", 1f, 500, new BounceInterpolator()),
+                createScaleAnimator(exit, "scaleY", 0.8f, 200),
+                createScaleAnimator(exit, "scaleY", 1f, 500, new BounceInterpolator())
+        );
+
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -138,19 +110,29 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 animatorSet.start();
             }
         });
+
         belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         kuis.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         animatorSet.start();
     }
 
+    private ObjectAnimator createScaleAnimator(View view, String property, float value, long duration) {
+        return ObjectAnimator.ofFloat(view, property, value).setDuration(duration);
+    }
+
+    private ObjectAnimator createScaleAnimator(View view, String property, float value, long duration, BounceInterpolator interpolator) {
+        ObjectAnimator animator = createScaleAnimator(view, property, value, duration);
+        animator.setInterpolator(interpolator);
+        return animator;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent= new Intent(this, MainActivity.class);
-        bindService(intent, this, Context.BIND_AUTO_CREATE);
-        Intent service = new Intent(getApplicationContext(), MusicService.class);
-        getApplicationContext().startService(service);
+        bindService(new Intent(this, MusicService.class), this, Context.BIND_AUTO_CREATE);
+        startService(new Intent(getApplicationContext(), MusicService.class));
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -160,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-        MusicService.ServiceBinder b = (MusicService.ServiceBinder) service;
-        mServ = b.getService();
+        MusicService.ServiceBinder binder = (MusicService.ServiceBinder) service;
+        mServ = binder.getService();
     }
 
     @Override
