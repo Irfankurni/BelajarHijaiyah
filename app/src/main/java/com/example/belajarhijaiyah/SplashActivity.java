@@ -1,52 +1,78 @@
 package com.example.belajarhijaiyah;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.WindowManager;
+import android.os.Looper;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DURATION = 6000; // 6 seconds
+    private static final int SPLASH_DURATION_MS = 6000;
+    private static final int STEP_INTERVAL_MS = SPLASH_DURATION_MS / 100;
     private ProgressBar progressBar;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private int currentProgress = 0;
+    private boolean isDestroyed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideSystemBars();
 
         progressBar = findViewById(R.id.splashscreen);
         progressBar.setMax(100);
         progressBar.setProgress(0);
 
-        simulateLoading();
+        startLoadingSequence();
     }
 
-    private void simulateLoading() {
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }, SPLASH_DURATION);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isDestroyed = true;
+        mainHandler.removeCallbacksAndMessages(null);
+    }
 
-        new Thread(() -> {
-            try {
-                for (int i = 0; i <= 100; i++) {
-                    final int progress = i;
-                    runOnUiThread(() -> progressBar.setProgress(progress));
-                    Thread.sleep(SPLASH_DURATION / 100);
-                }
-            } catch (InterruptedException e) {
-                Log.e(TAG, "Thread interrupted", e);
+    private void startLoadingSequence() {
+        // Navigate after full duration
+        mainHandler.postDelayed(() -> {
+            if (!isDestroyed) {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
             }
-        }).start();
+        }, SPLASH_DURATION_MS);
+
+        // Tick progress on the main thread — no raw Thread needed
+        tickProgress();
+    }
+
+    private void tickProgress() {
+        mainHandler.postDelayed(() -> {
+            if (isDestroyed) return;
+            if (currentProgress <= 100) {
+                progressBar.setProgress(currentProgress);
+                currentProgress++;
+                tickProgress();
+            }
+        }, STEP_INTERVAL_MS);
+    }
+
+    /**
+     * Replaces the deprecated WindowManager.FLAG_FULLSCREEN approach.
+     */
+    private void hideSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        controller.hide(WindowInsetsCompat.Type.systemBars());
+        controller.setSystemBarsBehavior(
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
     }
 }

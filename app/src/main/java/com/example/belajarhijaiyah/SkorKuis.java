@@ -1,15 +1,18 @@
 package com.example.belajarhijaiyah;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+
+import com.example.belajarhijaiyah.constant.Constants;
 
 public class SkorKuis extends AppCompatActivity {
 
@@ -20,7 +23,7 @@ public class SkorKuis extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skor_kuis);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        hideSystemBars();
 
         initializeViews();
         setupClickListeners();
@@ -28,9 +31,9 @@ public class SkorKuis extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        btnReturn = findViewById(R.id.button);
-        btnMain = findViewById(R.id.bckTmain);
-        resultLabel = findViewById(R.id.resultLabel);
+        btnReturn       = findViewById(R.id.button);
+        btnMain         = findViewById(R.id.bckTmain);
+        resultLabel     = findViewById(R.id.resultLabel);
         totalScoreLabel = findViewById(R.id.totalScoreLabel);
     }
 
@@ -40,23 +43,28 @@ public class SkorKuis extends AppCompatActivity {
     }
 
     private void navigateToActivity(Class<?> cls) {
-        Intent intent = new Intent(SkorKuis.this, cls);
-        startActivity(intent);
+        startActivity(new Intent(this, cls));
         finish();
     }
 
     private void updateScore() {
         int score = getIntent().getIntExtra("RIGHT_ANSWER_COUNT", 0);
-        SharedPreferences settings = getSharedPreferences("belajarngaji", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        int totalScore = settings.getInt("Skor Anda", 0);
-        totalScore += score;
+        int totalScore = prefs.getInt(Constants.PREF_TOTAL_SCORE, 0) + score;
 
-        resultLabel.setText(String .format("%s \"/10\"", score));
+        resultLabel.setText(String.format("%s/%s", score, Constants.QUIZ_COUNT));
         totalScoreLabel.setText(String.format("Total Skor : %s", totalScore));
 
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("totalScore", totalScore);
-        editor.apply();
+        prefs.edit().putInt(Constants.PREF_TOTAL_SCORE, totalScore).apply();
+    }
+
+    private void hideSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        controller.hide(WindowInsetsCompat.Type.systemBars());
+        controller.setSystemBarsBehavior(
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
     }
 }

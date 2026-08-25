@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -10,26 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- Background music service -->
         <service
             android:name=".MusicService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity
-            android:name=".kuis.KuisDotainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".kuis.KuisKastainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".kuis.KuisFatainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
+        <!-- Launcher / entry point -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -37,85 +25,121 @@
             tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".kuis.KuisDhomahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".kuis.KuisKasrohActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".kuis.KuisFathahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".kuis.KuisHijaiyahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".SkorKuis"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".KuisActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.HIjaiyahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.DhoTainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.KasTainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.FaTainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.DhommahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.KasrohActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".belajar.FathahActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
-        <activity
-            android:name=".BelajarActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            tools:ignore="DiscouragedApi" />
+
+        <!-- Main screens (not exported — only reachable within the app) -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".BelajarActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".KuisActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".SkorKuis"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <!-- Belajar sub-screens -->
+        <activity
+            android:name=".belajar.HIjaiyahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.FathahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.KasrohActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.DhommahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.FaTainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.KasTainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".belajar.DhoTainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <!-- Kuis sub-screens -->
+        <activity
+            android:name=".kuis.KuisHijaiyahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisFathahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisKasrohActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisDhomahActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisFatainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisKastainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
+        <activity
+            android:name=".kuis.KuisDotainActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            tools:ignore="DiscouragedApi" />
+
     </application>
 
 </manifest>

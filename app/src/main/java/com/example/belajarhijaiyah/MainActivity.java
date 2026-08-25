@@ -8,22 +8,23 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
 
@@ -35,58 +36,63 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        hideSystemBars();
         initializeViews();
         setupClickListeners();
+        setupBackPressHandler();
         startAnimations();
     }
 
     private void initializeViews() {
         belajar = findViewById(R.id.belajar);
-        kuis = findViewById(R.id.kuis);
-        exit = findViewById(R.id.exit);
-        info = findViewById(R.id.info);
-        dialog = new Dialog(this);
+        kuis    = findViewById(R.id.kuis);
+        exit    = findViewById(R.id.exit);
+        info    = findViewById(R.id.info);
+        dialog  = new Dialog(this);
     }
 
     private void setupClickListeners() {
         belajar.setOnClickListener(v -> {
-            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
-            startActivity(new Intent(MainActivity.this, BelajarActivity.class));
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+            startActivity(new Intent(this, BelajarActivity.class));
         });
 
         kuis.setOnClickListener(v -> {
-            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
-            startActivity(new Intent(MainActivity.this, KuisActivity.class));
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+            startActivity(new Intent(this, KuisActivity.class));
         });
 
         info.setOnClickListener(v -> openInfo());
 
         exit.setOnClickListener(v -> {
-            v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce));
-            onBackPressed();
+            v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+            showExitDialog();
+        });
+    }
+
+    private void setupBackPressHandler() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                showExitDialog();
+            }
         });
     }
 
     private void openInfo() {
         dialog.setContentView(R.layout.about);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ImageView ivclose = dialog.findViewById(R.id.exit1);
-        ivclose.setOnClickListener(v -> dialog.dismiss());
+        ImageView ivClose = dialog.findViewById(R.id.exit1);
+        ivClose.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
+    private void showExitDialog() {
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setMessage("Do you want to Exit?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    System.exit(0);
-                    finish();
-                })
-                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .setPositiveButton("Yes", (d, which) -> finishAffinity())
+                .setNegativeButton("No", (d, which) -> d.cancel())
                 .create()
                 .show();
     }
@@ -96,11 +102,11 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         animatorSet.setStartDelay(800);
         animatorSet.playSequentially(
                 createScaleAnimator(belajar, "scaleY", 0.8f, 200),
-                createScaleAnimator(belajar, "scaleY", 1f, 500, new BounceInterpolator()),
-                createScaleAnimator(kuis, "scaleY", 0.8f, 200),
-                createScaleAnimator(kuis, "scaleY", 1f, 500, new BounceInterpolator()),
-                createScaleAnimator(exit, "scaleY", 0.8f, 200),
-                createScaleAnimator(exit, "scaleY", 1f, 500, new BounceInterpolator())
+                createScaleAnimator(belajar, "scaleY", 1f,   500, new BounceInterpolator()),
+                createScaleAnimator(kuis,    "scaleY", 0.8f, 200),
+                createScaleAnimator(kuis,    "scaleY", 1f,   500, new BounceInterpolator()),
+                createScaleAnimator(exit,    "scaleY", 0.8f, 200),
+                createScaleAnimator(exit,    "scaleY", 1f,   500, new BounceInterpolator())
         );
 
         animatorSet.addListener(new AnimatorListenerAdapter() {
@@ -130,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     protected void onResume() {
         super.onResume();
         bindService(new Intent(this, MusicService.class), this, Context.BIND_AUTO_CREATE);
-        startService(new Intent(getApplicationContext(), MusicService.class));
+        startService(new Intent(this, MusicService.class));
     }
 
     @Override
@@ -149,5 +155,17 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mServ = null;
+    }
+
+    /**
+     * Replaces the deprecated WindowManager.FLAG_FULLSCREEN approach.
+     */
+    private void hideSystemBars() {
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowInsetsControllerCompat controller =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        controller.hide(WindowInsetsCompat.Type.systemBars());
+        controller.setSystemBarsBehavior(
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
     }
 }
