@@ -26,7 +26,6 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import com.example.belajarhijaiyah.constant.Constants;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
@@ -114,6 +113,9 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
             quizList.add(entry);
         }
 
+        // Shuffle the question pool so questions appear in random order
+        fisherYatesShuffle(quizList);
+
         showNextQuiz();
     }
 
@@ -149,13 +151,25 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
 
     // ── Quiz Logic ────────────────────────────────────────────────────────────
 
+    /**
+     * Fisher-Yates shuffle algorithm for an ArrayList.
+     * Produces a uniformly random permutation in O(n) time.
+     */
+    private <T> void fisherYatesShuffle(ArrayList<T> list) {
+        Random random = new Random();
+        for (int i = list.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            T temp = list.get(i);
+            list.set(i, list.get(j));
+            list.set(j, temp);
+        }
+    }
+
     private void showNextQuiz() {
         countLabel.setText(quizCount + "/" + Constants.QUIZ_COUNT);
 
-        // Pick a random question
-        Random random = new Random();
-        int randomIndex = random.nextInt(quizList.size());
-        ArrayList<String> quiz = quizList.get(randomIndex);
+        // Take the next question from the (already shuffled) pool
+        ArrayList<String> quiz = quizList.get(0);
 
         // Load and play question audio
         releaseQuestionPlayer();
@@ -172,17 +186,26 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
             });
         }
 
-        // Store the correct answer, then remove the key, shuffle answers
+        // Store the correct answer (index 1), then build answer choices list
         rightAnswer = quiz.get(1);
-        quiz.remove(0); // remove the audio-key element
-        Collections.shuffle(quiz);
-        ansButton1.setText(quiz.get(0));
-        ansButton2.setText(quiz.get(1));
-        ansButton3.setText(quiz.get(2));
-        ansButton4.setText(quiz.get(3));
+
+        // Build a separate list of answer choices so we don't mutate quizList entries
+        ArrayList<String> choices = new ArrayList<>();
+        for (int i = 1; i < quiz.size(); i++) {
+            choices.add(quiz.get(i));
+        }
+
+        // Fisher-Yates shuffle the answer choices so the correct answer
+        // is never stuck in the same button position
+        fisherYatesShuffle(choices);
+
+        ansButton1.setText(choices.get(0));
+        ansButton2.setText(choices.get(1));
+        ansButton3.setText(choices.get(2));
+        ansButton4.setText(choices.get(3));
 
         // Remove used question from pool
-        quizList.remove(randomIndex);
+        quizList.remove(0);
     }
 
     private void checkAnswer(View view) {
