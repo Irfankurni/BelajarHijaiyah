@@ -1,332 +1,59 @@
 package com.example.belajarhijaiyah.belajar;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.SparseArray;
 
-import android.annotation.SuppressLint;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-
+import com.example.belajarhijaiyah.BaseLearningActivity;
+import com.example.belajarhijaiyah.LetterItem;
 import com.example.belajarhijaiyah.R;
 
-public class FathahActivity extends AppCompatActivity implements View.OnClickListener{
-    ImageButton show, hide, kembali;
-    ImageView TampilGambar;
-    Animation anImScale;
-    SoundPool soundPool;
-    MediaPlayer mp;
-    private int SuaraAlif,SuaraBa,SuaraTa,SuaraSa,SuaraJim,SuaraHa,SuaraKho,SuaraDal,SuaraDzal,SuaraRo,
-            Suaraza,SuaraSin,SuaraSyin,SuaraShad,SuaraDod,SuaraTo,SuaraDo,SuaraAin,SuaraGin,Suarafa,SuaraKof,
-            SuaraKaf,SuaraLam,SuaraMim,SuaraNun,SuaraWawu,SuaraHA,SuaraYa;
+public class FathahActivity extends BaseLearningActivity {
 
-    @SuppressLint("CutPasteId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fathah);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        anImScale = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
-
-        TampilGambar = findViewById(R.id.tampil_fathah);
-        show = findViewById(R.id.fatah_a);
-        hide = findViewById(R.id.fatah_ba);
-        kembali = findViewById(R.id.kembali);
-
-        show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TampilGambar.setVisibility(View.VISIBLE);
-            }
-        });
-
-        hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TampilGambar.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        kembali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce));
-                finish();
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
-            soundPool = new SoundPool.Builder()
-                    .setMaxStreams(28)
-                    .setAudioAttributes(audioAttributes).build();
-        } else {
-            soundPool = new SoundPool(28, AudioManager.STREAM_MUSIC, 0);
-        }
-        SuaraAlif = soundPool.load(this, R.raw.fatah_a,1);
-        SuaraBa = soundPool.load(this, R.raw.fatah_ba,1);
-        SuaraTa = soundPool.load(this, R.raw.fatah_ta,1);
-        SuaraSa = soundPool.load(this, R.raw.fatah_sa,1);
-        SuaraJim = soundPool.load(this, R.raw.fatah_ja,1);
-        SuaraHa = soundPool.load(this, R.raw.fatah_ha,1);
-        SuaraKho = soundPool.load(this, R.raw.fatah_kha,1);
-        SuaraDal = soundPool.load(this, R.raw.fatah_da,1);
-        SuaraDzal = soundPool.load(this, R.raw.fatah_dza,1);
-        SuaraRo = soundPool.load(this, R.raw.fatah_ro,1);
-        Suaraza = soundPool.load(this, R.raw.fatah_za,2);
-        SuaraSin = soundPool.load(this, R.raw.fatah_sa,1);
-        SuaraSyin = soundPool.load(this, R.raw.fatah_sya,1);
-        SuaraShad =soundPool.load(this, R.raw.fatah_sho,1);
-        SuaraDod = soundPool.load(this, R.raw.fatah_dho,1);
-        SuaraTo = soundPool.load(this, R.raw.fatah_tho,1);
-        SuaraDo = soundPool.load(this, R.raw.fatah_dzho,1);
-        SuaraAin = soundPool.load(this, R.raw.fatah_aa,1);
-        SuaraGin = soundPool.load(this, R.raw.fatah_gho,1);
-        Suarafa = soundPool.load(this, R.raw.fatah_fa,1);
-        SuaraKof = soundPool.load(this, R.raw.fatah_qo,1);
-        SuaraKaf = soundPool.load(this, R.raw.fatah_ka,1);
-        SuaraLam = soundPool.load(this, R.raw.fatah_la,1);
-        SuaraMim = soundPool.load(this, R.raw.fatah_ma,1);
-        SuaraNun = soundPool.load(this, R.raw.fatah_na,1);
-        SuaraWawu = soundPool.load(this, R.raw.fatah_wa,1);
-        SuaraHA = soundPool.load(this, R.raw.fatah_haa,1);
-        SuaraYa = soundPool.load(this, R.raw.fatah_ya,1);
-
-        ImageButton ButtonSuara = findViewById(R.id.fatah_a);
-        ImageButton ButtonSuara2 = findViewById(R.id.fatah_ba);
-        ImageButton ButtonSuara3 = findViewById(R.id.fatah_ta);
-        ImageButton ButtonSuara4 = findViewById(R.id.fatah_tsa);
-        ImageButton ButtonSuara5 = findViewById(R.id.fatah_ja);
-        ImageButton ButtonSuara6 = findViewById(R.id.fatah_ha);
-        ImageButton ButtonSuara7 = findViewById(R.id.fatah_kha);
-        ImageButton ButtonSuara8 = findViewById(R.id.fatah_da);
-        ImageButton ButtonSuara9 = findViewById(R.id.fatah_dza);
-        ImageButton ButtonSuara10 = findViewById(R.id.fatah_ro);
-        ImageButton ButtonSuara11 = findViewById(R.id.fatah_za);
-        ImageButton ButtonSuara12 = findViewById(R.id.fatah_sa);
-        ImageButton ButtonSuara13 = findViewById(R.id.fatah_sya);
-        ImageButton ButtonSuara14 = findViewById(R.id.fatah_sho);
-        ImageButton ButtonSuara15 = findViewById(R.id.fatah_dho);
-        ImageButton ButtonSuara16 = findViewById(R.id.fatah_tho);
-        ImageButton ButtonSuara17 = findViewById(R.id.fatah_dzo);
-        ImageButton ButtonSuara18 = findViewById(R.id.fatah_zz);
-        ImageButton ButtonSuara19 = findViewById(R.id.fatah_gho);
-        ImageButton ButtonSuara20 = findViewById(R.id.fatah_fa);
-        ImageButton ButtonSuara21 = findViewById(R.id.fatah_qo);
-        ImageButton ButtonSuara22 = findViewById(R.id.fatah_ka);
-        ImageButton ButtonSuara23 = findViewById(R.id.fatah_lam);
-        ImageButton ButtonSuara24 = findViewById(R.id.fatah_mim);
-        ImageButton ButtonSuara25 = findViewById(R.id.fatah_nun);
-        ImageButton ButtonSuara26 = findViewById(R.id.fatah_wa);
-        ImageButton ButtonSuara27 = findViewById(R.id.fatah_haa);
-        ImageButton ButtonSuara28 = findViewById(R.id.fatah_ya);
-
-        ButtonSuara.setOnClickListener(this);
-        ButtonSuara2.setOnClickListener(this);
-        ButtonSuara3.setOnClickListener(this);
-        ButtonSuara4.setOnClickListener(this);
-        ButtonSuara5.setOnClickListener(this);
-        ButtonSuara6.setOnClickListener(this);
-        ButtonSuara7.setOnClickListener(this);
-        ButtonSuara8.setOnClickListener(this);
-        ButtonSuara9.setOnClickListener(this);
-        ButtonSuara10.setOnClickListener(this);
-        ButtonSuara11.setOnClickListener(this);
-        ButtonSuara12.setOnClickListener(this);
-        ButtonSuara13.setOnClickListener(this);
-        ButtonSuara14.setOnClickListener(this);
-        ButtonSuara15.setOnClickListener(this);
-        ButtonSuara16.setOnClickListener(this);
-        ButtonSuara17.setOnClickListener(this);
-        ButtonSuara18.setOnClickListener(this);
-        ButtonSuara19.setOnClickListener(this);
-        ButtonSuara20.setOnClickListener(this);
-        ButtonSuara21.setOnClickListener(this);
-        ButtonSuara22.setOnClickListener(this);
-        ButtonSuara23.setOnClickListener(this);
-        ButtonSuara24.setOnClickListener(this);
-        ButtonSuara25.setOnClickListener(this);
-        ButtonSuara26.setOnClickListener(this);
-        ButtonSuara27.setOnClickListener(this);
-        ButtonSuara28.setOnClickListener(this);
-    }
-    public void onClick (View v){
-        switch (v.getId()){
-            case R.id.fatah_a:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_a);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraAlif,1,1,0,0,1);
-                break;
-            case R.id.fatah_ba:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ba);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraBa,1,1,0,0,1);
-                break;
-            case R.id.fatah_ta:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ta);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraTa,1,1,0,0,1);
-                break;
-            case R.id.fatah_tsa:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_tsa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraSa,1,1,0,0,1);
-                break;
-            case R.id.fatah_ja:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ja);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraJim,1,1,0,0,1);
-                break;
-            case R.id.fatah_ha:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraHa,1,1,0,0,1);
-                break;
-            case R.id.fatah_kha:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_kha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraKho,1,1,0,0,1);
-                break;
-            case R.id.fatah_da:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_da);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraDal,1,1,0,0,1);
-                break;
-            case R.id.fatah_dza:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_dza);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraDzal,1,1,0,0,1);
-                break;
-            case R.id.fatah_ro:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ra);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraRo,1,1,0,0,1);
-                break;
-            case R.id.fatah_za:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_za);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(Suaraza,1,1,0,0,1);
-                break;
-            case R.id.fatah_sa:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_sa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraSin,1,1,0,0,1);
-                break;
-            case R.id.fatah_sya:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_sya);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraSyin,1,1,0,0,1);
-                break;
-            case R.id.fatah_sho:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_sha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraShad,1,1,0,0,1);
-                break;
-            case R.id.fatah_dho:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_dha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraDod ,1,1,0,0,1);
-                break;
-            case R.id.fatah_tho:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_tha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraTo ,1,1,0,0,1);
-                break;
-            case R.id.fatah_dzo:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_dzaa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraDo ,1,1,0,0,1);
-                break;
-            case R.id.fatah_zz:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ain);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraAin ,1,1,0,0,1);
-                break;
-            case R.id.fatah_gho:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_gha);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraGin ,1,1,0,0,1);
-                break;
-            case R.id.fatah_fa:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_fa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(Suarafa ,1,1,0,0,1);
-                break;
-            case R.id.fatah_qo:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_qa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraKof ,1,1,0,0,1);
-                break;
-            case R.id.fatah_ka:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ka);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraKaf ,1,1,0,0,1);
-                break;
-            case R.id.fatah_lam:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_la);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraLam ,1,1,0,0,1);
-                break;
-            case R.id.fatah_mim:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ma);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraMim ,1,1,0,0,1);
-                break;
-            case R.id.fatah_nun:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_na);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraNun ,1,1,0,0,1);
-                break;
-            case R.id.fatah_wa:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_wa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraWawu ,1,1,0,0,1);
-                break;
-            case R.id.fatah_haa:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_haa);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraHA ,1,1,0,0,1);
-                break;
-            case R.id.fatah_ya:
-                TampilGambar.setImageResource(R.drawable.pop_fatah_ya);
-                TampilGambar.startAnimation(anImScale);
-                soundPool.play(SuaraYa ,1,1,0,0,1);
-                break;
-        }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mp = MediaPlayer.create(this, R.raw.backsound);
-        mp.setVolume(0.06f, 0.06f);
-        mp.setLooping(true);
-        mp.start();
+    protected int getLayoutId() {
+        return R.layout.activity_fathah;
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mp.stop();
-        mp.release();
-    }
-    protected void onDestroy() {
-        super.onDestroy();
-        soundPool.release();
-        soundPool = null;
-        mp.release();
-        mp = null;
+    protected int getImageViewId() {
+        return R.id.tampil_fathah;
     }
 
+    @Override
+    protected int getBackButtonId() {
+        return R.id.kembali;
+    }
 
+    @Override
+    protected SparseArray<LetterItem> buildLetterMap() {
+        SparseArray<LetterItem> map = new SparseArray<>();
+        map.put(R.id.fatah_a,    new LetterItem(R.drawable.pop_fatah_a,    R.raw.fatah_a));
+        map.put(R.id.fatah_ba,   new LetterItem(R.drawable.pop_fatah_ba,   R.raw.fatah_ba));
+        map.put(R.id.fatah_ta,   new LetterItem(R.drawable.pop_fatah_ta,   R.raw.fatah_ta));
+        map.put(R.id.fatah_tsa,  new LetterItem(R.drawable.pop_fatah_tsa,  R.raw.fatah_sa));
+        map.put(R.id.fatah_ja,   new LetterItem(R.drawable.pop_fatah_ja,   R.raw.fatah_ja));
+        map.put(R.id.fatah_ha,   new LetterItem(R.drawable.pop_fatah_ha,   R.raw.fatah_ha));
+        map.put(R.id.fatah_kha,  new LetterItem(R.drawable.pop_fatah_kha,  R.raw.fatah_kha));
+        map.put(R.id.fatah_da,   new LetterItem(R.drawable.pop_fatah_da,   R.raw.fatah_da));
+        map.put(R.id.fatah_dza,  new LetterItem(R.drawable.pop_fatah_dza,  R.raw.fatah_dza));
+        map.put(R.id.fatah_ro,   new LetterItem(R.drawable.pop_fatah_ra,   R.raw.fatah_ro));
+        map.put(R.id.fatah_za,   new LetterItem(R.drawable.pop_fatah_za,   R.raw.fatah_za));
+        map.put(R.id.fatah_sa,   new LetterItem(R.drawable.pop_fatah_sa,   R.raw.fatah_sa));
+        map.put(R.id.fatah_sya,  new LetterItem(R.drawable.pop_fatah_sya,  R.raw.fatah_sya));
+        map.put(R.id.fatah_sho,  new LetterItem(R.drawable.pop_fatah_sha,  R.raw.fatah_sho));
+        map.put(R.id.fatah_dho,  new LetterItem(R.drawable.pop_fatah_dha,  R.raw.fatah_dho));
+        map.put(R.id.fatah_tho,  new LetterItem(R.drawable.pop_fatah_tha,  R.raw.fatah_tho));
+        map.put(R.id.fatah_dzo,  new LetterItem(R.drawable.pop_fatah_dzaa, R.raw.fatah_dzho));
+        map.put(R.id.fatah_zz,   new LetterItem(R.drawable.pop_fatah_ain,  R.raw.fatah_aa));
+        map.put(R.id.fatah_gho,  new LetterItem(R.drawable.pop_fatah_gha,  R.raw.fatah_gho));
+        map.put(R.id.fatah_fa,   new LetterItem(R.drawable.pop_fatah_fa,   R.raw.fatah_fa));
+        map.put(R.id.fatah_qo,   new LetterItem(R.drawable.pop_fatah_qa,   R.raw.fatah_qo));
+        map.put(R.id.fatah_ka,   new LetterItem(R.drawable.pop_fatah_ka,   R.raw.fatah_ka));
+        map.put(R.id.fatah_lam,  new LetterItem(R.drawable.pop_fatah_la,   R.raw.fatah_la));
+        map.put(R.id.fatah_mim,  new LetterItem(R.drawable.pop_fatah_ma,   R.raw.fatah_ma));
+        map.put(R.id.fatah_nun,  new LetterItem(R.drawable.pop_fatah_na,   R.raw.fatah_na));
+        map.put(R.id.fatah_wa,   new LetterItem(R.drawable.pop_fatah_wa,   R.raw.fatah_wa));
+        map.put(R.id.fatah_haa,  new LetterItem(R.drawable.pop_fatah_haa,  R.raw.fatah_haa));
+        map.put(R.id.fatah_ya,   new LetterItem(R.drawable.pop_fatah_ya,   R.raw.fatah_ya));
+        return map;
+    }
 }
