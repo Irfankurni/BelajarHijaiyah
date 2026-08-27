@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         hideSystemBars();
 
-        progressBar = findViewById(R.id.splashscreen);
+        progressBar = findViewById(R.id.progress_bar);
         progressBar.setMax(100);
         progressBar.setProgress(0);
 

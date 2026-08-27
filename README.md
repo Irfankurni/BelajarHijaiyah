@@ -32,38 +32,38 @@ Aplikasi Android edukatif untuk belajar **Huruf Hijaiyah** beserta tanda bacanya
 ```
 app/src/main/java/com/example/belajarhijaiyah/
 │
-├── BaseQuizActivity.java        # Abstract base class untuk semua layar kuis
-├── BaseLearningActivity.java    # Abstract base class untuk semua layar belajar
+├── BaseQuizActivity.java          # Abstract base class untuk semua layar kuis
+├── BaseLearningActivity.java      # Abstract base class untuk semua layar belajar
 │
-├── SplashActivity.java          # Layar splash (entry point)
-├── MainActivity.java            # Menu utama
-├── BelajarActivity.java         # Menu pilih kategori belajar
-├── KuisActivity.java            # Menu pilih kategori kuis
-├── SkorKuis.java                # Layar rekap skor
-├── MusicService.java            # Service untuk background music
-├── LetterItem.java              # Model data huruf
+├── SplashActivity.java            # Layar splash (entry point)
+├── MainActivity.java              # Menu utama
+├── LearnActivity.java             # Menu pilih kategori belajar
+├── QuizMenuActivity.java          # Menu pilih kategori kuis
+├── QuizScoreActivity.java         # Layar rekap skor
+├── MusicService.java              # Service untuk background music
+├── LetterItem.java                # Model data huruf
 │
-├── belajar/                     # Layar belajar per kategori (extends BaseLearningActivity)
-│   ├── HIjaiyahActivity.java
-│   ├── FathahActivity.java
-│   ├── KasrohActivity.java
-│   ├── DhommahActivity.java
-│   ├── FaTainActivity.java
-│   ├── KasTainActivity.java
-│   └── DhoTainActivity.java
+├── belajar/                       # Layar belajar per kategori (extends BaseLearningActivity)
+│   ├── HijaiyahLearningActivity.java
+│   ├── FathahLearningActivity.java
+│   ├── KasrohLearningActivity.java
+│   ├── DhommahLearningActivity.java
+│   ├── FatainLearningActivity.java
+│   ├── KastainLearningActivity.java
+│   └── DhotainLearningActivity.java
 │
-├── kuis/                        # Layar kuis per kategori (extends BaseQuizActivity)
-│   ├── KuisHijaiyahActivity.java
-│   ├── KuisFathahActivity.java
-│   ├── KuisKasrohActivity.java
-│   ├── KuisDhomahActivity.java
-│   ├── KuisFatainActivity.java
-│   ├── KuisKastainActivity.java
-│   └── KuisDotainActivity.java
+├── kuis/                          # Layar kuis per kategori (extends BaseQuizActivity)
+│   ├── HijaiyahQuizActivity.java
+│   ├── FathahQuizActivity.java
+│   ├── KasrohQuizActivity.java
+│   ├── DhommahQuizActivity.java
+│   ├── FatainQuizActivity.java
+│   ├── KastainQuizActivity.java
+│   └── DotainQuizActivity.java
 │
 └── constant/
-    ├── Constants.java           # Konstanta global (skor, SharedPreferences keys, dll.)
-    └── Soal.java                # Data soal kuis semua kategori (String[][])
+    ├── Constants.java             # Konstanta global (skor, SharedPreferences keys, dll.)
+    └── QuizData.java              # Data soal kuis semua kategori (String[][])
 ```
 
 ### Pola Desain
@@ -73,7 +73,7 @@ Aplikasi menggunakan pola **Template Method** melalui dua abstract base class:
 **`BaseQuizActivity`** — Subclass hanya perlu mengimplementasikan dua method:
 ```java
 protected abstract int getLayoutId();        // Layout XML yang digunakan
-protected abstract String[][] getQuizData(); // Data soal dari Soal.*
+protected abstract String[][] getQuizData(); // Data soal dari QuizData.*
 ```
 
 **`BaseLearningActivity`** — Pola yang sama untuk layar belajar.
@@ -150,10 +150,10 @@ implementation 'com.google.android.material:material:1.12.0'
 
 ## 📁 Struktur Data Soal
 
-Setiap baris di `Soal.java` mengikuti format:
+Setiap baris di `QuizData.java` mengikuti format:
 
 ```
-{ "audio_resource_name", "jawaban_benar", "pilihan_2", "pilihan_3", "pilihan_4" }
+{ "audio_resource_name", "correct_answer", "choice_2", "choice_3", "choice_4" }
 ```
 
 Contoh:

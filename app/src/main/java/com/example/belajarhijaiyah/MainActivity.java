@@ -28,8 +28,8 @@ import androidx.core.view.WindowInsetsControllerCompat;
 
 public class MainActivity extends AppCompatActivity implements ServiceConnection {
 
-    private ImageButton belajar, kuis, info, exit;
-    private MusicService mServ;
+    private ImageButton learnButton, quizButton, info, exit;
+    private MusicService musicService;
     private Dialog dialog;
 
     @Override
@@ -44,22 +44,22 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     private void initializeViews() {
-        belajar = findViewById(R.id.belajar);
-        kuis    = findViewById(R.id.kuis);
+        learnButton = findViewById(R.id.learn_button);
+        quizButton    = findViewById(R.id.quiz_button);
         exit    = findViewById(R.id.exit);
         info    = findViewById(R.id.info);
         dialog  = new Dialog(this);
     }
 
     private void setupClickListeners() {
-        belajar.setOnClickListener(v -> {
+        learnButton.setOnClickListener(v -> {
             v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-            startActivity(new Intent(this, BelajarActivity.class));
+            startActivity(new Intent(this, LearnActivity.class));
         });
 
-        kuis.setOnClickListener(v -> {
+        quizButton.setOnClickListener(v -> {
             v.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-            startActivity(new Intent(this, KuisActivity.class));
+            startActivity(new Intent(this, QuizMenuActivity.class));
         });
 
         info.setOnClickListener(v -> openInfo());
@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setStartDelay(800);
         animatorSet.playSequentially(
-                createScaleAnimator(belajar, "scaleY", 0.8f, 200),
-                createScaleAnimator(belajar, "scaleY", 1f,   500, new BounceInterpolator()),
-                createScaleAnimator(kuis,    "scaleY", 0.8f, 200),
-                createScaleAnimator(kuis,    "scaleY", 1f,   500, new BounceInterpolator()),
+                createScaleAnimator(learnButton, "scaleY", 0.8f, 200),
+                createScaleAnimator(learnButton, "scaleY", 1f,   500, new BounceInterpolator()),
+                createScaleAnimator(quizButton,    "scaleY", 0.8f, 200),
+                createScaleAnimator(quizButton,    "scaleY", 1f,   500, new BounceInterpolator()),
                 createScaleAnimator(exit,    "scaleY", 0.8f, 200),
                 createScaleAnimator(exit,    "scaleY", 1f,   500, new BounceInterpolator())
         );
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         });
 
-        belajar.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        kuis.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        learnButton.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        quizButton.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         animatorSet.start();
     }
 
@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         MusicService.ServiceBinder binder = (MusicService.ServiceBinder) service;
-        mServ = binder.getService();
+        musicService = binder.getService();
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        mServ = null;
+        musicService = null;
     }
 
     /**

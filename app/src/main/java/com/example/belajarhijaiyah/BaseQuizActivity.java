@@ -34,7 +34,7 @@ import java.util.Random;
  *
  * Subclasses only need to provide:
  *   - getLayoutId()    – the layout resource
- *   - getQuizData()    – the 2-D String[][] quiz data from Soal.*
+ *   - getQuizData()    – the 2-D String[][] quiz data from QuizData.*
  */
 public abstract class BaseQuizActivity extends AppCompatActivity {
 
@@ -45,10 +45,10 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
 
     // Current question state
     private MediaPlayer questionPlayer;
-    private String rightAnswer;
-    private int rightAnswerCount = 0;
-    private int quizCount = 1;
-    private final ArrayList<ArrayList<String>> quizList = new ArrayList<>();
+    private String correctAnswer;
+    private int correctAnswerCount = 0;
+    private int questionNumber = 1;
+    private final ArrayList<ArrayList<String>> questionPool = new ArrayList<>();
 
     // Views (resolved in onCreate)
     private TextView countLabel;
@@ -75,18 +75,18 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
                 .setMaxStreams(3)
                 .setAudioAttributes(audioAttributes)
                 .build();
-        finishSoundId = soundPool.load(this, R.raw.sound_selesai, 1);
+        finishSoundId = soundPool.load(this, R.raw.sound_finish, 1);
 
         // Bind views
-        countLabel = findViewById(R.id.countLabel);
-        questionButton = findViewById(R.id.suara);
-        ansButton1 = findViewById(R.id.ansButton1);
-        ansButton2 = findViewById(R.id.ansButton2);
-        ansButton3 = findViewById(R.id.ansButton3);
-        ansButton4 = findViewById(R.id.ansButton4);
+        countLabel = findViewById(R.id.question_counter_label);
+        questionButton = findViewById(R.id.play_sound_button);
+        ansButton1 = findViewById(R.id.answer_button_1);
+        ansButton2 = findViewById(R.id.answer_button_2);
+        ansButton3 = findViewById(R.id.answer_button_3);
+        ansButton4 = findViewById(R.id.answer_button_4);
 
         // Close / back button
-        ImageButton closeButton = findViewById(R.id.exit8);
+        ImageButton closeButton = findViewById(R.id.close_button);
         if (closeButton != null) {
             closeButton.setOnClickListener(v -> navigateToKuis());
         }
@@ -110,11 +110,11 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
             for (String cell : row) {
                 entry.add(cell);
             }
-            quizList.add(entry);
+            questionPool.add(entry);
         }
 
         // Shuffle the question pool so questions appear in random order
-        fisherYatesShuffle(quizList);
+        fisherYatesShuffle(questionPool);
 
         showNextQuiz();
     }
@@ -166,10 +166,10 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
     }
 
     private void showNextQuiz() {
-        countLabel.setText(quizCount + "/" + Constants.QUIZ_COUNT);
+        countLabel.setText(questionNumber + "/" + Constants.QUIZ_COUNT);
 
         // Take the next question from the (already shuffled) pool
-        ArrayList<String> quiz = quizList.get(0);
+        ArrayList<String> quiz = questionPool.get(0);
 
         // Load and play question audio
         releaseQuestionPlayer();
@@ -187,9 +187,9 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
         }
 
         // Store the correct answer (index 1), then build answer choices list
-        rightAnswer = quiz.get(1);
+        correctAnswer = quiz.get(1);
 
-        // Build a separate list of answer choices so we don't mutate quizList entries
+        // Build a separate list of answer choices so we don't mutate questionPool entries
         ArrayList<String> choices = new ArrayList<>();
         for (int i = 1; i < quiz.size(); i++) {
             choices.add(quiz.get(i));
@@ -205,26 +205,26 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
         ansButton4.setText(choices.get(3));
 
         // Remove used question from pool
-        quizList.remove(0);
+        questionPool.remove(0);
     }
 
     private void checkAnswer(View view) {
         Button tapped = (Button) view;
         String answer = tapped.getText().toString();
 
-        if (answer.equals(rightAnswer)) {
+        if (answer.equals(correctAnswer)) {
             Toast.makeText(this, Constants.ANS_RIGHT, Toast.LENGTH_SHORT).show();
-            rightAnswerCount++;
+            correctAnswerCount++;
         } else {
             Toast.makeText(this, Constants.ANS_WRONG, Toast.LENGTH_SHORT).show();
         }
 
-        if (quizCount == Constants.QUIZ_COUNT) {
+        if (questionNumber == Constants.QUIZ_COUNT) {
             Toast.makeText(this, Constants.FINISH, Toast.LENGTH_SHORT).show();
             soundPool.play(finishSoundId, 1, 1, 0, 0, 1);
             showResult();
         } else {
-            quizCount++;
+            questionNumber++;
             showNextQuiz();
         }
     }
@@ -235,18 +235,18 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
         Objects.requireNonNull(dialog.getWindow())
                 .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        View dialogLayout = LayoutInflater.from(this).inflate(R.layout.skor_kuis, null);
+        View dialogLayout = LayoutInflater.from(this).inflate(R.layout.quiz_score_dialog, null);
         dialog.setView(dialogLayout);
 
         // Score display
-        int score = rightAnswerCount;
+        int score = correctAnswerCount;
         SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         int totalScore = prefs.getInt(Constants.PREF_TOTAL_SCORE, 0) + score;
 
-        ((TextView) dialogLayout.findViewById(R.id.resultLabel))
+        ((TextView) dialogLayout.findViewById(R.id.result_label))
                 .setText(score + "/" + Constants.QUIZ_COUNT);
-        ((TextView) dialogLayout.findViewById(R.id.totalScoreLabel))
-                .setText("Total Skor : " + totalScore);
+        ((TextView) dialogLayout.findViewById(R.id.total_score_label))
+                .setText("Total Score: " + totalScore);
 
         // Persist new total
         prefs.edit().putInt(Constants.PREF_TOTAL_SCORE, totalScore).apply();
@@ -263,7 +263,7 @@ public abstract class BaseQuizActivity extends AppCompatActivity {
     // ── Navigation ────────────────────────────────────────────────────────────
 
     private void navigateToKuis() {
-        startActivity(new Intent(this, KuisActivity.class));
+        startActivity(new Intent(this, QuizMenuActivity.class));
         finish();
     }
 

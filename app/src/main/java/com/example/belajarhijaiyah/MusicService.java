@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 public class MusicService extends Service implements MediaPlayer.OnErrorListener {
 
-    private final IBinder mBinder = new ServiceBinder();
-    private MediaPlayer mPlayer;
+    private final IBinder binder = new ServiceBinder();
+    private MediaPlayer mediaPlayer;
 
     public MusicService() { }
 
@@ -22,7 +22,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
 
     @Override
     public IBinder onBind(Intent intent) {
-        return mBinder;
+        return binder;
     }
 
     @Override
@@ -32,18 +32,18 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
 
     private void initializeMediaPlayer() {
-        mPlayer = MediaPlayer.create(this, R.raw.backsound);
-        if (mPlayer != null) {
-            mPlayer.setLooping(true);
-            mPlayer.setVolume(0.7f, 0.7f);
-            mPlayer.setOnErrorListener(this);
+        mediaPlayer = MediaPlayer.create(this, R.raw.backsound);
+        if (mediaPlayer != null) {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.setVolume(0.7f, 0.7f);
+            mediaPlayer.setOnErrorListener(this);
         }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (mPlayer != null && !mPlayer.isPlaying()) {
-            mPlayer.start();
+        if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
         }
         return START_STICKY;
     }
@@ -55,12 +55,12 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
     }
 
     private void releaseMediaPlayer() {
-        if (mPlayer != null) {
-            if (mPlayer.isPlaying()) {
-                mPlayer.stop();
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
             }
-            mPlayer.release();
-            mPlayer = null;
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 

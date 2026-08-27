@@ -37,105 +37,105 @@
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".BelajarActivity"
+            android:name=".LearnActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".KuisActivity"
+            android:name=".QuizMenuActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".SkorKuis"
+            android:name=".QuizScoreActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <!-- Belajar sub-screens -->
         <activity
-            android:name=".belajar.HIjaiyahActivity"
+            android:name=".belajar.HijaiyahLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.FathahActivity"
+            android:name=".belajar.FathahLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.KasrohActivity"
+            android:name=".belajar.KasrohLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.DhommahActivity"
+            android:name=".belajar.DhommahLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.FaTainActivity"
+            android:name=".belajar.FatainLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.KasTainActivity"
+            android:name=".belajar.KastainLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".belajar.DhoTainActivity"
+            android:name=".belajar.DhotainLearningActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <!-- Kuis sub-screens -->
         <activity
-            android:name=".kuis.KuisHijaiyahActivity"
+            android:name=".kuis.HijaiyahQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisFathahActivity"
+            android:name=".kuis.FathahQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisKasrohActivity"
+            android:name=".kuis.KasrohQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisDhomahActivity"
+            android:name=".kuis.DhommahQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisFatainActivity"
+            android:name=".kuis.FatainQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisKastainActivity"
+            android:name=".kuis.KastainQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
 
         <activity
-            android:name=".kuis.KuisDotainActivity"
+            android:name=".kuis.DotainQuizActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
             tools:ignore="DiscouragedApi" />
